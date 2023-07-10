@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Movie Archive Project - HomePage</title>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>Welcome To The Movie Archive</h2>
+
+    <form id="searchForm" class="mb-3 form-inline">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search movies...">
+        <button type="submit" class="btn btn-primary ml-2">Search</button>
+    </form>
+
+    <a th:if="${user == null}" class="btn btn-primary" th:href="@{/login}">Login To Add Movies</a>
+    <a th:if="${user!= null}" class="btn btn-primary" th:href="@{/logout}">Logout</a>
+    <a th:if="${user!= null}" class="btn btn-outline-secondary pull-right" th:href="@{/movies/new}">Back To Adding Movies</a>
+
+    <div th:if="${param.success}" class="alert alert-success">
+        You are registered successfully!
+    </div>
+    <div class="row mt-2">
+        <div th:each="movie, iterStat : ${movies}" class="col-md-4 movie-card">
+            <div class="card mb-3">
+                <img class="card-img-top" th:src="${movie.imageUrl}" alt="Movie Poster">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${movie.title}"></h5>
+                    <p class="card-text" th:text="${movie.description}"></p>
+                    <p class="card-text" th:text="${movie.duration}"></p>
+                    <p class="card-text" th:text="${movie.category}"></p>
+                    <div th:if="${user!= null and (user.id == movie.createdBy.id or user.getRoles().get(0).getName() == 'ADMIN')}">
+                    <a  class="btn btn-primary" th:href="@{movie/{movieId}/edit(movieId=${movie.id})}">Edit</a>
+                    <a class="btn btn-danger pull-right" th:href="@{movie/{movieId}/delete(movieId=${movie.id})}">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${iterStat.count % 3 == 0}" class="w-100 d-none d-md-block"></div>
+        </div>
+    </div>
+
+</div>
+</body>
+
+<script>
+    // adding event listesener to search button
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        debugger;
+        event.preventDefault();
+
+        var searchText = document.getElementById('searchInput').value.toLowerCase();
+        var movieCards = document.getElementsByClassName('movie-card');
+
+        // iterates every card and searches according to title
+        for (var i = 0; i < movieCards.length; i++) {
+            var movieTitle = movieCards[i].querySelector('.card-title').textContent.toLowerCase();
+
+            if (movieTitle.includes(searchText)) {
+                movieCards[i].style.display = 'block';
+            } else {
+                movieCards[i].style.display = 'none';
+            }
+        }
+    });
+</script>
+</html>
+

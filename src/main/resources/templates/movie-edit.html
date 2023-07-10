@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Movie Archive Project - Edit Movie</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-2">
+  <h2 class="mt-2 d-flex justify-content-center">Edit Page</h2>
+  <form role="form" method="post" th:action="@{/movie/{movieId}/edit(movieId=${movie.id})}" th:object="${movie}">
+    <div class="form-group">
+      <input type="hidden" th:field="*{id}">
+      <label for="title">Title</label>
+      <input
+              th:field="*{title}"
+              name="title"
+              type="text"
+              class="form-control"
+              id="title"
+              placeholder="Movie title">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input
+              th:field="*{description}"
+              name="description"
+              type="text"
+              class="form-control"
+              id="description"
+              placeholder="Movie description">
+    </div>
+    <div class="form-group">
+      <label for="duration">Duration</label>
+      <input
+              th:field="*{duration}"
+              name="duration"
+              type="text"
+              class="form-control"
+              id="duration"
+              placeholder="Duration">
+    </div>
+    <div class="form-group">
+      <label for="imageUrl">ImageUrl</label>
+      <input
+              th:field="*{imageUrl}"
+              name="imageUrl"
+              type="text"
+              class="form-control"
+              id="imageUrl"
+              placeholder="Image Url">
+    </div>
+
+    <input type="hidden"
+           th:field="*{createdBy}"
+           name="createdBy"
+           id="createdBy">
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+</div>
+</body>
+</html>

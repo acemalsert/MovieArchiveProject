@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Movie Archive Project - Login</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-2">
+  <h2 class="mt-2 d-flex justify-content-center">Login</h2>
+  <div th:if="${param.error}" class="alert alert-success">
+    Invalid username and password.
+  </div>
+  <div th:if="${param.logout}" class="alert alert-success">
+    You have been logged out.</div>
+  <form role="form" method="post" th:action="@{/login}">
+    <div class="form-group">
+      <label>Username</label>
+      <input
+              id="username"
+              type="text"
+              class="form-control"
+              placeholder="Username"
+              name="username">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input
+              id="password"
+              type="password"
+              class="form-control"
+              placeholder="Password"
+              name="password">
+    </div>
+    <a th:href="@{/register}" class="btn btn-black">Don't have an account? Register here.</a>
+    <button type="submit" value="Log in" class="btn btn-secondary">Login</button>
+  </form>
+</div>
+</div>
+</body>
+</html>
